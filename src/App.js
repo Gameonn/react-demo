@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium, {StyleRoot} from 'radium';
 import Person from './Person/Person';
 import UserInput from './UserInput/UserInput';
 import UserOutput from './UserOutput/UserOutput';
@@ -85,7 +86,11 @@ class App extends Component {
       margin: '10px auto',
       display: 'block',
       borderRadius: '5px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     }
 
     let persons = null;
@@ -107,6 +112,10 @@ class App extends Component {
         </div>
       );
       style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
     }
     const classes = [];
     if(this.state.persons.length <= 2) {
@@ -122,20 +131,22 @@ class App extends Component {
     });
 
     return (
-      <div className="App">
-      <p className={classes.join(' ')}> This is working fine!! </p>
-      <UserInput changed={this.usernameChangedHandler} username={this.state.username}/>
-      <UserOutput username={this.state.username} />
-      <input type="text" onChange={this.inputChangedHandler} value={this.state.userInput}/>
-      <p>{this.state.userInput} </p>
-      <Validation inputTextLength={this.state.userInput.length} />
-      {charList}
+      <StyleRoot>
+        <div className="App">
+        <p className={classes.join(' ')}> This is working fine!! </p>
+        <UserInput changed={this.usernameChangedHandler} username={this.state.username}/>
+        <UserOutput username={this.state.username} />
+        <input type="text" onChange={this.inputChangedHandler} value={this.state.userInput}/>
+        <p>{this.state.userInput} </p>
+        <Validation inputTextLength={this.state.userInput.length} />
+        {charList}
 
-        <button style={style} onClick={() => this.switchNameHandler('Maximilian!!!')}> Switch Name </button>
-        <button onClick={() => this.togglePersonHandler()}> Toggle </button>
-        {/*  this.state.showPersons ? `<div></div>` : null */}
-            {persons}
-      </div>
+          <button style={style} onClick={() => this.switchNameHandler('Maximilian!!!')}> Switch Name </button>
+          <button onClick={() => this.togglePersonHandler()}> Toggle </button>
+          {/*  this.state.showPersons ? `<div></div>` : null */}
+              {persons}
+        </div>
+      </StyleRoot>
     );
   }
 }
